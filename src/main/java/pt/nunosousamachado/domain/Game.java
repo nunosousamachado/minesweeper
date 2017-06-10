@@ -14,7 +14,7 @@ public class Game {
         this.selectionBoard = selectionBoard;
     }
 
-    public boolean play (int x, int y) throws IllegalSelectionException {
+    public boolean play (int x, int y) throws IllegalSelectionException, IllegalDuplicateSelectionException {
 
         selectionBoard.registerSelection(x, y);
 

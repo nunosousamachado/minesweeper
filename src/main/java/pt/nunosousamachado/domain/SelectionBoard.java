@@ -17,7 +17,7 @@ public class SelectionBoard {
 
     }
 
-    public void registerSelection(int x, int y) throws IllegalSelectionException {
+    public void registerSelection(int x, int y) throws IllegalSelectionException, IllegalDuplicateSelectionException {
 
         if((x < 0 || x > 9) || (y < 0 || y > 9)) {
 
@@ -26,7 +26,7 @@ public class SelectionBoard {
 
         if(selectionBoard[x][y] == PLAYED) {
 
-            throw new IllegalSelectionException("You have selected this coordinates before! Play again.");
+            throw new IllegalDuplicateSelectionException("You have selected this coordinates before! Play again.");
         }
 
         selectionBoard[x][y] = PLAYED;
