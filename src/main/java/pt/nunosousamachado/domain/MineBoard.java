@@ -14,7 +14,22 @@ public class MineBoard {
         this.generateNumberOfMines();
     }
 
-    public int getNumberOfMines(int x, int y) {
+    public int getTotalNumberMines() {
+
+        int count = 0;
+
+        for(int i=0; i<mineBoard.length; i++) {
+            for(int j=0; j<mineBoard[i].length; j++) {
+
+                if(mineBoard[i][j]==MINE){
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    public int getNumberOfMinesArround(int x, int y) {
 
         return mineBoard[x][y];
     }

@@ -28,6 +28,12 @@ public class Game {
         }
     }
 
+    public boolean isGameOver() {
+
+        return mineBoard.getTotalNumberMines() == selectionBoard.getTotalNotPlayedCells();
+    }
+
+
     public String revealBoard() {
 
         StringBuilder reveal = new StringBuilder();
@@ -41,7 +47,7 @@ public class Game {
                     reveal.append('*');
                 } else {
 
-                    reveal.append("" + mineBoard.getNumberOfMines(i, j));
+                    reveal.append("" + mineBoard.getNumberOfMinesArround(i, j));
                 }
             }
             reveal.append("\n");
@@ -67,7 +73,7 @@ public class Game {
 
                     } else {
 
-                        sb.append(Character.forDigit(mineBoard.getNumberOfMines(i, j), 10));
+                        sb.append(Character.forDigit(mineBoard.getNumberOfMinesArround(i, j), 10));
                     }
 
                 } else {

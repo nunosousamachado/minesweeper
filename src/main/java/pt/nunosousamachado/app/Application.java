@@ -19,7 +19,7 @@ public class Application {
         String row;
         String column;
         Game game;
-        boolean playResult = true;
+        boolean continuePlaying = true;
 
         do {
             try {
@@ -39,6 +39,7 @@ public class Application {
                     do {
                         System.out.println("Select a row to play:");
                         row = scanner.nextLine();
+
                         try {
                             rowX = Integer.valueOf(row);
 
@@ -51,6 +52,7 @@ public class Application {
                         System.out.println("Select a column to play:");
                         column = scanner.nextLine();
 
+
                         try{
                             columnY = Integer.valueOf(column);
 
@@ -60,10 +62,27 @@ public class Application {
                             continue;
                         }
 
+
                         try {
 
-                            playResult = game.play(rowX, columnY);
+                            continuePlaying = game.play(rowX, columnY);
                             System.out.println(game);
+
+                            if(continuePlaying==false) {
+
+                                System.out.println("BUUUMMMMM!!! GAME OVER!!!");
+                                System.out.println();
+                                System.out.println(game.revealBoard());
+
+                            } else if (game.isGameOver()) {
+
+                                System.out.println("YEEAAAH!! YOU WIN!!!");
+                                System.out.println();
+                                System.out.println(game.revealBoard());
+
+                                continuePlaying = false;
+                            }
+
 
                         } catch (IllegalSelectionException selection) {
 
@@ -76,11 +95,10 @@ public class Application {
                             System.out.println();
                         }
 
-                    } while(playResult);
 
-                    System.out.println("BUUUMMMMM!!! GAME OVER!!!");
-                    System.out.println();
-                    System.out.println(game.revealBoard());
+                    } while(continuePlaying);
+
+
 
 
 

@@ -38,6 +38,22 @@ public class SelectionBoard {
         return selectionBoard[x][y] == PLAYED;
     }
 
+    public int getTotalNotPlayedCells() {
+
+        int count = 0;
+
+        for(int i=0; i<selectionBoard.length; i++) {
+            for(int j=0; j<selectionBoard[i].length; j++) {
+
+                if (selectionBoard[i][j] == NOT_PLAYED){
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+
     @Override
     public String toString() {
 
