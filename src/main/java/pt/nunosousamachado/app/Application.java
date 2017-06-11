@@ -24,10 +24,10 @@ public class Application {
         do {
             try {
                 System.out.println("********** Welcome to MineSweeper **********");
-                System.out.println("********** 1 - Play Game");
-                System.out.println("********** 2 - Exit Game");
-                System.out.println("********** ********** ********** **********");
-                System.out.println("Choose an option:");
+                System.out.println("********** 1 - Play Game       *************");
+                System.out.println("********** 2 - Exit Game       *************");
+                System.out.println("************* Choose an Option *************");
+                System.out.println(":::::>");
                 String input = scanner.nextLine();
                 option = Integer.valueOf(input);
 
@@ -80,6 +80,9 @@ public class Application {
 
                     System.out.println("BUUUMMMMM!!! GAME OVER!!!");
                     System.out.println();
+                    System.out.println(game.revealBoard());
+
+
 
                 } else if (option == 2) {
                     System.out.println("See you next time!");

@@ -28,6 +28,30 @@ public class Game {
         }
     }
 
+    public String revealBoard() {
+
+        StringBuilder reveal = new StringBuilder();
+
+        for(int i=0; i<DIM; i++) {
+            for (int j=0; j<DIM; j++) {
+
+                reveal.append("\t");
+                if(mineBoard.isAMine(i,j)) {
+
+                    reveal.append('*');
+                } else {
+
+                    reveal.append("" + mineBoard.getNumberOfMines(i, j));
+                }
+            }
+            reveal.append("\n");
+        }
+
+        return reveal.toString();
+    }
+
+
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
