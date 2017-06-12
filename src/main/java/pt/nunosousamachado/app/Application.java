@@ -70,13 +70,13 @@ public class Application {
 
                             if(continuePlaying==false) {
 
-                                System.out.println("BUUUMMMMM!!! GAME OVER!!!");
+                                System.out.println("GAME OVER! YOU LOST!");
                                 System.out.println();
                                 System.out.println(game.revealBoard());
 
                             } else if (game.isGameOver()) {
 
-                                System.out.println("YEEAAAH!! YOU WIN!!!");
+                                System.out.println("GAME OVER! YOU WIN!");
                                 System.out.println();
                                 System.out.println(game.revealBoard());
 
