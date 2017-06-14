@@ -1,6 +1,8 @@
 package pt.nunosousamachado.domain;
 
-
+/**
+ * Created by nunomachado on 21/05/17.
+ */
 public class MineBoard {
 
     private static final int MAX_MINES = 10;

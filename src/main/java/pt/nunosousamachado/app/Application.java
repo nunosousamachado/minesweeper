@@ -99,9 +99,6 @@ public class Application {
                     } while(continuePlaying);
 
 
-
-
-
                 } else if (option == 2) {
                     System.out.println("See you next time!");
                     return;
