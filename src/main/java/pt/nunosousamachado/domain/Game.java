@@ -8,23 +8,34 @@ public class Game {
     private MineBoard mineBoard;
     private SelectionBoard selectionBoard;
     private static final int DIM = 10;
+    private GameStatus gameStatus;
 
     public Game(MineBoard mineBoard, SelectionBoard selectionBoard) {
         this.mineBoard = mineBoard;
         this.selectionBoard = selectionBoard;
+        this.gameStatus = GameStatus.PLAYING;
     }
 
-    public boolean play (int x, int y) throws IllegalSelectionException, IllegalDuplicateSelectionException {
+    public GameStatus getGameStatus() {
+
+        return this.gameStatus;
+    }
+
+    public void play (int x, int y) throws IllegalSelectionException, IllegalDuplicateSelectionException {
 
         selectionBoard.registerSelection(x, y);
 
         if(mineBoard.isAMine(x, y)) {
 
-            return false;
+            gameStatus = GameStatus.LOST;
+
+        } else if (isGameOver()) {
+
+            gameStatus = GameStatus.WON;
 
         } else {
 
-            return true;
+            gameStatus = GameStatus.PLAYING;
         }
     }
 

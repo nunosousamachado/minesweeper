@@ -19,7 +19,6 @@ public class Application {
         String row;
         String column;
         Game game;
-        boolean continuePlaying = true;
 
         do {
             try {
@@ -33,7 +32,7 @@ public class Application {
 
                 if(option == 1) {
 
-                    game = generateGame();
+                    game = GameFactory.createGame();
                     System.out.println(game);
 
                     do {
@@ -65,24 +64,23 @@ public class Application {
 
                         try {
 
-                            continuePlaying = game.play(rowX, columnY);
+                            game.play(rowX, columnY);
+                            GameStatus status = game.getGameStatus();
                             System.out.println(game);
 
-                            if(continuePlaying==false) {
+                            if(status == GameStatus.LOST) {
 
                                 System.out.println("GAME OVER! YOU LOST!");
                                 System.out.println();
                                 System.out.println(game.revealBoard());
 
-                            } else if (game.isGameOver()) {
+                            } else if (status == GameStatus.WON) {
 
                                 System.out.println("GAME OVER! YOU WIN!");
                                 System.out.println();
                                 System.out.println(game.revealBoard());
 
-                                continuePlaying = false;
                             }
-
 
                         } catch (IllegalSelectionException selection) {
 
@@ -95,8 +93,7 @@ public class Application {
                             System.out.println();
                         }
 
-
-                    } while(continuePlaying);
+                    } while(game.getGameStatus() == GameStatus.PLAYING);
 
 
                 } else if (option == 2) {
@@ -117,16 +114,5 @@ public class Application {
         } while (option != 2);
 
     }
-
-
-    public static Game generateGame() {
-
-        MineBoard board = new MineBoard();
-        SelectionBoard sBoard = new SelectionBoard();
-        Game uBoard = new Game(board, sBoard);
-
-        return uBoard;
-    }
-
 
 }
