@@ -72,13 +72,11 @@ public class Application {
 
                                 System.out.println("GAME OVER! YOU LOST!");
                                 System.out.println();
-                                //System.out.println(game.revealBoard());
 
                             } else if (status == GameStatus.WON) {
 
                                 System.out.println("GAME OVER! YOU WIN!");
                                 System.out.println();
-                                //System.out.println(game.revealBoard());
 
                             }
 
@@ -87,11 +85,7 @@ public class Application {
                             System.out.println(selection.getMessage());
                             System.out.println();
 
-                        } /*catch (IllegalDuplicateSelectionException duplicateSelection) {
-
-                            System.out.println(duplicateSelection.getMessage());
-                            System.out.println();
-                        }*/
+                        }
 
                     } while(game.getGameStatus() == GameStatus.PLAYING);
 
