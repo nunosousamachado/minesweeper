@@ -12,83 +12,26 @@ public class Application {
     public static void main(String[] args) throws IllegalSelectionException {
 
         Scanner scanner = new Scanner(System.in);
-
         int option = -1;
-        int rowX;
-        int columnY;
-        String row;
-        String column;
-        Game game;
 
         do {
+
             try {
-                System.out.println("********** Welcome to MineSweeper **********");
-                System.out.println("********** 1 - Play Game       *************");
-                System.out.println("********** 2 - Exit Game       *************");
-                System.out.println("************* Choose an Option *************");
-                System.out.println(":::::>");
+
+                printMenu();
                 String input = scanner.nextLine();
                 option = Integer.valueOf(input);
 
                 if(option == 1) {
 
-                    game = GameFactory.createGame();
+                    Game game = GameFactory.createGame();
                     System.out.println(game);
 
                     do {
-                        System.out.println("Select a row to play:");
-                        row = scanner.nextLine();
-
-                        try {
-                            rowX = Integer.valueOf(row);
-
-                        } catch (NumberFormatException rowException) {
-
-                            System.out.println("Invalid input. Choose a number between 0 and 9! Play again.");
-                            continue;
-                        }
-
-                        System.out.println("Select a column to play:");
-                        column = scanner.nextLine();
-
-
-                        try{
-                            columnY = Integer.valueOf(column);
-
-                        } catch (NumberFormatException columnException) {
-
-                            System.out.println("Invalid input. Choose a number between 0 and 9!");
-                            continue;
-                        }
-
-
-                        try {
-
-                            game.play(rowX, columnY);
-                            GameStatus status = game.getGameStatus();
-                            System.out.println(game);
-
-                            if(status == GameStatus.LOST) {
-
-                                System.out.println("GAME OVER! YOU LOST!");
-                                System.out.println();
-
-                            } else if (status == GameStatus.WON) {
-
-                                System.out.println("GAME OVER! YOU WIN!");
-                                System.out.println();
-
-                            }
-
-                        } catch (IllegalSelectionException selection) {
-
-                            System.out.println(selection.getMessage());
-                            System.out.println();
-
-                        }
+                        Coordinate coordinate = readCoordinates(scanner);
+                        play(game, coordinate);
 
                     } while(game.getGameStatus() == GameStatus.PLAYING);
-
 
                 } else if (option == 2) {
                     System.out.println("See you next time!");
@@ -102,11 +45,116 @@ public class Application {
 
                 System.out.println("Invalid input. Choose 1 to Play Game ou 2 to Exit!");
                 System.out.println();
-
             }
 
         } while (option != 2);
+    }
+
+    private static void play(Game game, Coordinate coordinate) {
+        int rowX = coordinate.getRow();
+        int columnY = coordinate.getColumn();
+
+        try {
+
+            game.play(rowX, columnY);
+            GameStatus status = game.getGameStatus();
+            System.out.println(game);
+
+            if(status == GameStatus.LOST) {
+                printLostMessage();
+            } else if (status == GameStatus.WON) {
+                printWinMessage();
+            }
+
+        } catch (IllegalSelectionException selection) {
+
+            System.out.println(selection.getMessage());
+            System.out.println();
+        }
+    }
+
+    private static void printLostMessage() {
+        System.out.println("GAME OVER! YOU LOST!");
+        System.out.println();
+    }
+
+    private static void printWinMessage() {
+        System.out.println("GAME OVER! YOU WIN!");
+        System.out.println();
+    }
+
+    private static void printMenu() {
+
+        System.out.println("********** Welcome to MineSweeper **********");
+        System.out.println("********** 1 - Play Game       *************");
+        System.out.println("********** 2 - Exit Game       *************");
+        System.out.println("************* Choose an Option *************");
+        System.out.println(":::::>");
+    }
+
+    private static Coordinate readCoordinates(Scanner scanner) {
+        int rowX = readRow(scanner);
+        int columnY = readColumn(scanner);
+
+        return new Coordinate(rowX, columnY);
 
     }
 
+    private static int readRow(Scanner scanner) {
+        int rowX = -1;
+        boolean rowSetted = false;
+
+        do {
+            System.out.println("Select a row to play:");
+            String row = scanner.nextLine();
+
+            try {
+                rowX = Integer.valueOf(row);
+                rowSetted = true;
+            } catch (NumberFormatException rowException) {
+                System.out.println("Invalid input. Choose a number between 0 and 9! Play again.");
+            }
+        }
+        while(!rowSetted);
+        return rowX;
+    }
+
+    private static int readColumn(Scanner scanner) {
+        int columnY = -1;
+        boolean columnSetted = false;
+
+        do {
+            System.out.println("Select a column to play:");
+            String column = scanner.nextLine();
+
+            try {
+                columnY = Integer.valueOf(column);
+                columnSetted = true;
+
+            } catch (NumberFormatException columnException) {
+                System.out.println("Invalid input. Choose a number between 0 and 9!");
+            }
+        }
+        while (!columnSetted);
+        return columnY;
+    }
+
+    private static class Coordinate {
+
+        private int row;
+        private int column;
+
+        public Coordinate(int row, int column) {
+            this.row = row;
+            this.column = column;
+        }
+
+        public int getRow() {
+            return row;
+        }
+
+        public int getColumn() {
+            return column;
+        }
+    }
 }
