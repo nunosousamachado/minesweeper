@@ -8,9 +8,9 @@ public class GameFactory {
     public static Game createGame() {
 
         Board board = new Board();
-        Game uGame = new Game(board);
+        Game game = new Game(board);
 
-        return uGame;
+        return game;
     }
 
 

@@ -14,7 +14,7 @@ public class Field {
         this.status = FieldStatus.CLOSED;
     }
 
-    public int getNumberofMinesAround() {
+    public int getNumberOfMinesAround() {
 
         if(isAMine()) {
 

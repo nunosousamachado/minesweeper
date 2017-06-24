@@ -23,13 +23,11 @@ public class Game {
         Field field =  board.getField(x, y);
 
         if(field.isAMine()) {
-
             field.setStatus(FieldStatus.OPENED);
             gameStatus = GameStatus.LOST;
             board.revealBoard();
 
         } else {
-
             field.setStatus(FieldStatus.OPENED);
 
             if(isGameFinished()) {
@@ -38,7 +36,6 @@ public class Game {
                 board.revealBoard();
             }
         }
-
     }
 
     private boolean isGameFinished() {
@@ -46,11 +43,10 @@ public class Game {
         return board.getTotalNumberMines() == board.getTotalNumberOfFieldsClosed();
     }
 
-
     @Override
     public String toString() {
 
         return board.toString();
     }
-
+    
 }

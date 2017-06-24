@@ -143,7 +143,7 @@ public class Board {
 
                     if (!(field.isAMine())) {
 
-                        sb.append(field.getNumberofMinesAround());
+                        sb.append(field.getNumberOfMinesAround());
 
                     } else {
 
