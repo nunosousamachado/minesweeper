@@ -5,14 +5,11 @@ package pt.nunosousamachado.domain;
  */
 public class Game {
 
-    private MineBoard mineBoard;
-    private SelectionBoard selectionBoard;
-    private static final int DIM = 10;
+    private Board board;
     private GameStatus gameStatus;
 
-    public Game(MineBoard mineBoard, SelectionBoard selectionBoard) {
-        this.mineBoard = mineBoard;
-        this.selectionBoard = selectionBoard;
+    public Game(Board board) {
+        this.board = board;
         this.gameStatus = GameStatus.PLAYING;
     }
 
@@ -21,82 +18,39 @@ public class Game {
         return this.gameStatus;
     }
 
-    public void play (int x, int y) throws IllegalSelectionException, IllegalDuplicateSelectionException {
+    public void play (int x, int y) throws IllegalSelectionException {
 
-        selectionBoard.registerSelection(x, y);
+        Field field =  board.getField(x, y);
 
-        if(mineBoard.isAMine(x, y)) {
+        if(field.isAMine()) {
 
+            field.setStatus(FieldStatus.OPENED);
             gameStatus = GameStatus.LOST;
-
-        } else if (isGameOver()) {
-
-            gameStatus = GameStatus.WON;
+            board.revealBoard();
 
         } else {
 
-            gameStatus = GameStatus.PLAYING;
-        }
-    }
+            field.setStatus(FieldStatus.OPENED);
 
-    public boolean isGameOver() {
+            if(isGameFinished()) {
 
-        return mineBoard.getTotalNumberMines() == selectionBoard.getTotalNotPlayedCells();
-    }
-
-
-    public String revealBoard() {
-
-        StringBuilder reveal = new StringBuilder();
-
-        for(int i=0; i<DIM; i++) {
-            for (int j=0; j<DIM; j++) {
-
-                reveal.append("\t");
-                if(mineBoard.isAMine(i,j)) {
-
-                    reveal.append('*');
-                } else {
-
-                    reveal.append("" + mineBoard.getNumberOfMinesArround(i, j));
-                }
+                gameStatus = GameStatus.WON;
+                board.revealBoard();
             }
-            reveal.append("\n");
         }
 
-        return reveal.toString();
     }
 
+    private boolean isGameFinished() {
+
+        return board.getTotalNumberMines() == board.getTotalNumberOfFieldsClosed();
+    }
 
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
 
-        for(int i=0; i<DIM; i++) {
-            for(int j=0; j<DIM; j++) {
-
-                sb.append("\t");
-                if(selectionBoard.hasPlayed(i, j)) {
-                    if(mineBoard.isAMine(i, j)) {
-
-                        sb.append('*');
-
-                    } else {
-
-                        sb.append(Character.forDigit(mineBoard.getNumberOfMinesArround(i, j), 10));
-                    }
-
-                } else {
-
-                    sb.append('_');
-                }
-            }
-
-            sb.append("\n");
-        }
-
-        return sb.toString();
+        return board.toString();
     }
 
 }

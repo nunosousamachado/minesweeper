@@ -3,13 +3,13 @@ package pt.nunosousamachado.domain;
 /**
  * Created by nunomachado on 17/06/17.
  */
-public class BoardField {
+public class Field {
 
     private static final int MINE = -1;
     private int value;
     private FieldStatus status;
 
-    public BoardField() {
+    public Field() {
         this.value = 0;
         this.status = FieldStatus.CLOSED;
     }
@@ -42,6 +42,16 @@ public class BoardField {
     public boolean isAMine() {
 
         return value == MINE;
+    }
+
+    public FieldStatus getStatus() {
+
+        return this.status;
+    }
+
+    public void setStatus(FieldStatus status) {
+
+        this.status = status;
     }
 
 }

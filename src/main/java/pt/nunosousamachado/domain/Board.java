@@ -8,11 +8,11 @@ public class Board {
     private static final int MAX_MINES = 10;
     private int count = 0;
 
-    private BoardField[][] board;
+    private Field[][] board;
 
     public Board () {
 
-        this.board = new BoardField[10][10];
+        this.board = new Field[10][10];
         this.boardInit();
         this.generateMines();
         this.generateNumberOfMinesAround();
@@ -23,7 +23,26 @@ public class Board {
         return this.count;
     }
 
-    public BoardField getField(int x, int y) throws IllegalSelectionException {
+    public int getTotalNumberOfFieldsClosed() {
+
+        int closedFields = 0;
+
+        for(int i=0; i<board.length; i++) {
+            for(int j=0; j<board[i].length; j++) {
+
+                Field field = board[i][j];
+
+                if(field.getStatus() == FieldStatus.CLOSED) {
+
+                    closedFields++;
+                }
+            }
+        }
+
+        return closedFields;
+    }
+
+    public Field getField(int x, int y) throws IllegalSelectionException {
 
         if((x<0 || x>9 ) || (y<0 || y>9)) {
 
@@ -33,12 +52,24 @@ public class Board {
         return board[x][y];
     }
 
+    public void revealBoard() {
+
+        for(int i=0; i<board.length; i++) {
+            for(int j=0; j<board[i].length; j++) {
+
+                Field field = board[i][j];
+                field.setStatus(FieldStatus.OPENED);
+            }
+        }
+
+    }
+
     private void boardInit() {
 
         for(int i=0; i<board.length; i++) {
             for(int j=0; j<board[i].length; j++) {
 
-                board[i][j] = new BoardField();
+                board[i][j] = new Field();
             }
         }
     }
@@ -50,7 +81,7 @@ public class Board {
 
                 if(Math.random()<0.15 && this.count<MAX_MINES) {
 
-                    BoardField field = board[i][j];
+                    Field field = board[i][j];
                     field.setMine();
                     this.count++;
                 }
@@ -63,7 +94,7 @@ public class Board {
         for(int i=0; i<board.length; i++) {
             for (int j=0; j<board[i].length; j++) {
 
-                BoardField field = board[i][j];
+                Field field = board[i][j];
 
                 if(!field.isAMine()) {
 
@@ -85,9 +116,9 @@ public class Board {
         for(int i = startRow; i<=endRow; i++) {
             for(int j = startCollumn; j<=endCollumn; j++) {
 
-                BoardField field = board[i][j];
+                Field field = board[i][j];
 
-                if((i!=x && j!=y) && field.isAMine()) {
+                if((i!=x || j!=y) && field.isAMine()) {
 
                     numberMines++;
                 }
@@ -97,5 +128,36 @@ public class Board {
         return numberMines;
     }
 
+    @Override
+    public String toString() {
+
+        StringBuilder sb = new StringBuilder();
+
+        for(int i=0; i<board.length; i++) {
+            for(int j=0; j<board[i].length; j++) {
+
+                Field field = board[i][j];
+                sb.append("\t");
+
+                if(field.getStatus() == FieldStatus.OPENED) {
+
+                    if (!(field.isAMine())) {
+
+                        sb.append(field.getNumberofMinesAround());
+
+                    } else {
+
+                        sb.append("*");
+                    }
+                } else if (field.getStatus() == FieldStatus.CLOSED) {
+
+                    sb.append("_");
+                }
+            }
+            sb.append("\n");
+        }
+
+        return sb.toString();
+    }
 
 }

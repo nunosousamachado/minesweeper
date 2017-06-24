@@ -7,9 +7,8 @@ public class GameFactory {
 
     public static Game createGame() {
 
-        MineBoard mBoard = new MineBoard();
-        SelectionBoard sBoard = new SelectionBoard();
-        Game uGame = new Game(mBoard, sBoard);
+        Board board = new Board();
+        Game uGame = new Game(board);
 
         return uGame;
     }
